@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-to-ocr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-to-ocr
+  template:
+    metadata:
+      labels:
+        app: image-to-ocr
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: image-to-ocr
+        image: giuliasregistry.azurecr.io/imageocr
+        ports:
+        - containerPort: 3001
+          name: image-to-ocr
+        resources:
+          requests:
+            cpu: 10m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
